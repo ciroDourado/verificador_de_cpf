@@ -17,7 +17,7 @@
 */
 
 fn main() {
-    let cpfUsuario = String::from("123.456.789-01");
+    let cpfUsuario = String::from("529.982.247-25");
     
     match cpfValido(cpfUsuario) {
         true  => println!("Este cpf é válido"),
@@ -64,11 +64,21 @@ fn obterDigitos(cpf: String) -> String {
 fn penultimoDigitoValido(cpf: String) -> bool {
     cpf.as_str().chars()
         .rev()
-        .map(|char| char.to_digit(10))
-        .zip( (1..).into_iter() );
+        .skip(2)
+        .map(|char| char.to_digit(10).unwrap())
+        .zip( (2..).into_iter() )
+        .map(digitoVezesIndice)
+        .sum::<u32>();
     true
 } // fim penultimoDigitoValido
 
+
+fn digitoVezesIndice(enupla: (u32, usize)) -> u32 {
+    let digito = enupla.0;
+    let indice = enupla.1 as u32;
+    
+    digito*indice
+} // fim digitoVezesIndice
 
 // demais métodos auxiliares devem ser dados, como:
 // retornar uma instância de CPF formatado - Option
