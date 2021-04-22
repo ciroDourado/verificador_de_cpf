@@ -1,11 +1,28 @@
-fn main() {
-    let cpf = String::from("123.456.789-01");
-    
-    let digitos = cpf.as_str().chars()
-        .filter(|&char| char.is_ascii_digit())
-        .collect::<String>();
+#![allow(non_snake_case)]
 
-    println!("numeros dados: {}", digitos.len()); 
+/*
+        struct CPF {
+            digitos: String
+        } // fim da struct
+
+        impl CPF {
+            fn new() -> Self {
+                CPF{ digitos: String::new() }
+            } // fim do construtor
+
+            fn from(&mut self, string: String) {
+
+            }
+        } // fim dos métodos para CPF
+*/
+
+fn main() {
+    let cpfUsuario = String::from("123.456.789-01");
+    
+    match cpfValido(cpfUsuario) {
+        true  => println!("Este cpf é válido"),
+        false => println!("cpf inválido!")
+    }
 } // fim da main
 
 
@@ -17,6 +34,40 @@ fn main() {
 // a função de verificar cpf deve retornar um bool,
 // pois como ela própria diz: ou o cpf é válido, ou
 // não é
+
+
+fn cpfValido(cpf: String) -> bool {
+    match cpf.is_empty() {
+        false => tem11Digitos(cpf),
+        _     => false,
+    }
+} // fim cpfValido
+
+
+fn tem11Digitos(cpf: String) -> bool {
+    let digitos = obterDigitos(cpf);
+    match digitos.len() {
+        11 => penultimoDigitoValido(digitos), 
+        _  => false
+    }
+} // fim tem11Digitos
+
+
+fn obterDigitos(cpf: String) -> String { 
+    let digitos = cpf.as_str().chars()
+        .filter(|&char| char.is_ascii_digit())
+        .collect::<String>();
+    digitos
+} // fim obterDigitos
+
+
+fn penultimoDigitoValido(cpf: String) -> bool {
+    cpf.as_str().chars()
+        .rev()
+        .map(|char| char.to_digit(10))
+        .zip( (1..).into_iter() );
+    true
+} // fim penultimoDigitoValido
 
 
 // demais métodos auxiliares devem ser dados, como:
