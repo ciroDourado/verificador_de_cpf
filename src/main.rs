@@ -29,10 +29,7 @@ impl CPF {
 
 
     pub fn ehValido(&self) -> bool {
-        match self.validarCPF() {
-            Ok(_)  => true,
-            Err(_) => false
-        }
+        self.validarCPF().is_ok()
     } // fim do método CPF é válido
 
 
