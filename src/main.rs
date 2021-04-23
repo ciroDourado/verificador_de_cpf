@@ -11,6 +11,11 @@ impl CPF {
     } // fim do construtor
 
 
+    pub fn from(digitos: &'static str) -> Self {
+        CPF { cpf: String::from(digitos) }
+    } // fim do construtor
+
+
     pub fn set(&mut self, digitos: &'static str) {
         self.cpf = String::from(digitos);
     } // fim do método set digitos
