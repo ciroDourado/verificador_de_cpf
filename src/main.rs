@@ -21,9 +21,17 @@ impl CPF {
     } // fim do método get digitos
 
 
-    pub fn ehValido(&self) -> Result<(), &'static str> {
+    pub fn ehValido(&self) -> bool {
+        match self.validarCPF() {
+            Ok(_)  => true,
+            Err(_) => false
+        }
+    } // fim do método CPF é válido
+
+
+    pub fn validarCPF(&self) -> Result<&'static str, &'static str> {
         self.tem11Digitos()?;
-            Ok(())
+            Ok("O CPF dado é valido")
     } // fim do método CPF é válido
 
 
@@ -46,7 +54,7 @@ impl CPF {
     fn oPenultimoEhValido(&self) -> Result<(), &'static str> {
         let penultimo = self.obterDigito(9);
 
-        Err("não foi implementado 1")
+        Err("O CPF não gera o penúltimo algarismo")
     } // fim do método privado oPenultimoEhValido
 
 
@@ -60,7 +68,7 @@ impl CPF {
     fn oUltimoEhValido(&self) -> Result<(), &'static str> {
         let ultimo = self.obterDigito(10);
 
-        Err("não foi implementado 2")
+        Err("O CPF não gera o último algarismo")
     } // fim do método privado oUltimoEhValido
 
 
@@ -72,9 +80,20 @@ fn main() {
     cpfUsuario.set("529.982.247-25");
 
     match cpfUsuario.ehValido() {
-        Ok(())      => println!("Este CPF é válido"),
-        Err(motivo) => println!("{}", motivo)
+        true  => println!("Este CPF é válido"),
+        false => println!("O CPF foi dado incorretamente")
     }
+
+    println!("{}", match cpfUsuario.validarCPF() {
+        Ok(resultado) => resultado,
+        Err(motivo)   => motivo
+    });
+
+    match cpfUsuario.validarCPF() {
+        Ok(resultado) => println!("{}", resultado),
+        Err(motivo)   => println!("{}", motivo)
+    }
+
 } // fim da main
 
 
