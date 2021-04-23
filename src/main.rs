@@ -1,4 +1,8 @@
-#![allow(non_snake_case, dead_code)]
+#![allow(
+    non_snake_case,
+    dead_code,
+    unused_variables
+)]
 
 
 pub struct CPF {
@@ -86,7 +90,7 @@ fn main() {
         true  => println!("Este CPF é válido"),
         false => println!("O CPF foi dado incorretamente")
     }
-
+    
     println!("{}", match cpfUsuario.validarCPF() {
         Ok(resultado) => resultado,
         Err(motivo)   => motivo
