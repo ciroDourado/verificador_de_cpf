@@ -6,11 +6,13 @@ pub struct CPF {
 } // fim da struct
 
 impl CPF {
+    // for mutable instances
     pub fn new() -> Self {
         CPF { cpf: String::new() }
     } // fim do construtor
 
 
+    // for immutable instances
     pub fn from(digitos: &'static str) -> Self {
         CPF { cpf: String::from(digitos) }
     } // fim do construtor
@@ -81,8 +83,7 @@ impl CPF {
 
 
 fn main() {
-    let mut cpfUsuario = CPF::new();
-    cpfUsuario.set("529.982.247-25");
+    let cpfUsuario = CPF::from("529.982.247-25");
 
     match cpfUsuario.ehValido() {
         true  => println!("Este CPF é válido"),
