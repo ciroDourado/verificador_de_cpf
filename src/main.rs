@@ -13,6 +13,7 @@
 //     pois como ela própria diz: ou o cpf é válido, ou
 //     não é
 
+use std::cmp::Ordering;
 
 pub struct CPF {
     cpf: String
@@ -53,9 +54,12 @@ impl CPF {
 
 
     fn tem11Digitos(&self) -> Result<(), &'static str> {
-         match self.obterDigitos().len() {
-             11 => self.oPenultimoEhValido(),
-             _  => Err("Não possui todos os 11 dígitos")
+        let numeroDeDigitos = self.obterDigitos().len();
+
+         match numeroDeDigitos.cmp(&11) {
+            Ordering::Equal   => self.oPenultimoEhValido(),
+            Ordering::Less    => Err("Menos que 11 dígitos"),
+            Ordering::Greater => Err("Mais que 11 dígitos")
          }
     } // fim do método privado tem11Digitos
 
@@ -69,38 +73,70 @@ impl CPF {
 
 
     fn oPenultimoEhValido(&self) -> Result<(), &'static str> {
-        let penultimo = self.obterDigito(9);
+        let indice: usize = 9;
+        let penultimo = self.obterDigito(indice);
 
-        match penultimo == self.gerarVerificador() {
-            true  => Ok(()),
+        match penultimo == self.gerarVerificador(indice) {
+            true  => self.oUltimoEhValido(),
             false => Err("O CPF não gera o penúltimo algarismo")
         }
     } // fim do método privado oPenultimoEhValido
 
 
         fn obterDigito(&self, posicao: usize) -> u32 {
-            self.get().as_str().chars()
+            self.obterDigitos().as_str().chars()
                 .nth(posicao).unwrap()
                 .to_digit(10).unwrap()
         } // fim obterPenultimoDigito
 
 
     fn oUltimoEhValido(&self) -> Result<(), &'static str> {
-        let ultimo = self.obterDigito(10);
+        let indice: usize = 10;
+        let ultimo = self.obterDigito(indice);
 
-        match ultimo == self.gerarVerificador() {
+        match ultimo == self.gerarVerificador(indice) {
             true  => Ok(()),
             false => Err("O CPF não gera o último algarismo")
         }
     } // fim do método privado oUltimoEhValido
 
 
-        fn gerarVerificador(&self) -> u32 {
-            0
+        fn gerarVerificador(&self, indice: usize) -> u32 {
+            let elementos = self.digitosVezesIndices(11 - indice);
+            let soma = elementos.iter().sum::<u32>();
+            let resto = (soma*10) % 11;
+
+            match resto == 10 {
+                true  => 0,
+                false => resto
+            }
         } // fim do método privado gerarVerificador
 
 
+        fn digitosVezesIndices(&self, quantidade: usize) -> Vec<u32> {
+            let elementos = self.obterDigitos().as_str().chars()
+                .rev().skip(quantidade)
+                .map(charPara_u32)
+                .zip( (2..).into_iter() )
+                .map(digitoVezesIndice)
+                .collect::<Vec<u32>>();
+            elementos
+        } // fim digitosVezesIndices
+
 } // fim dos métodos
+
+
+fn charPara_u32(algarismo: char) -> u32 {
+    algarismo.to_digit(10).unwrap()
+} // fim digitoVezesIndice
+
+
+fn digitoVezesIndice(enupla: (u32, usize)) -> u32 {
+    let digito = enupla.0;
+    let indice = enupla.1 as u32;
+
+    digito*indice
+} // fim digitoVezesIndice
 
 
 fn main() {
@@ -132,39 +168,3 @@ fn main() {
     println!("{}", validacao);
 
 } // fim da main
-
-
-// fn primeiroVerificador(cpf: String) -> u32 {
-//     let elementos = digitosVezesIndices(cpf,2);
-//     let soma = elementos.iter().sum::<u32>();
-//
-//     let resultado = (soma*10) % 11;
-//     resultado
-// } // fim primeiroVerificador
-//
-//
-// fn digitosVezesIndices(cpf: String, skip: usize) -> Vec<u32> {
-//     cpf.as_str().chars()
-//         .rev().skip(skip)
-//         .map(|char| char.to_digit(10).unwrap())
-//         .zip( (2..).into_iter() )
-//         .map(digitoVezesIndice)
-//         .collect::<Vec<u32>>()
-// } // fim digitosVezesIndices
-//
-//
-// fn digitoVezesIndice(enupla: (u32, usize)) -> u32 {
-//     let digito = enupla.0;
-//     let indice = enupla.1 as u32;
-//
-//     digito*indice
-// } // fim digitoVezesIndice
-//
-//
-// fn segundoVerificador(cpf: String) -> u32 {
-//     let elementos = digitosVezesIndices(cpf,1);
-//     let soma = elementos.iter().sum::<u32>();
-//
-//     let resultado = (soma*10) % 11;
-//     resultado
-// } // fim primeiroVerificador
