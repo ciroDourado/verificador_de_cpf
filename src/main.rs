@@ -56,11 +56,11 @@ impl CPF {
     fn tem11Digitos(&self) -> Result<(), &'static str> {
         let numeroDeDigitos = self.obterDigitos().len();
 
-         match numeroDeDigitos.cmp(&11) {
+        match numeroDeDigitos.cmp(&11) {
             Ordering::Equal   => self.oPenultimoEhValido(),
             Ordering::Less    => Err("Menos que 11 dígitos"),
             Ordering::Greater => Err("Mais que 11 dígitos")
-         }
+        }
     } // fim do método privado tem11Digitos
 
 
@@ -151,20 +151,20 @@ fn main() {
     // tentativas de visualizar melhor qual
     // forma de escrever é a mais clara/legível
 
-    println!("{}", match cpfUsuario.validarCPF() {
-        Ok(resultado) => resultado,
-        Err(motivo)   => motivo
-    });
+    // println!("{}", match cpfUsuario.validarCPF() {
+    //     Ok(resultado) => resultado,
+    //     Err(motivo)   => motivo
+    // });
 
     match cpfUsuario.validarCPF() {
         Ok(resultado) => println!("{}", resultado),
         Err(motivo)   => println!("{}", motivo)
     }
 
-    let validacao = match cpfUsuario.validarCPF() {
-        Ok(resultado) => resultado,
-        Err(motivo)   => motivo
-    };
-    println!("{}", validacao);
+    // let validacao = match cpfUsuario.validarCPF() {
+    //     Ok(resultado) => resultado,
+    //     Err(motivo)   => motivo
+    // };
+    // println!("{}", validacao);
 
 } // fim da main
