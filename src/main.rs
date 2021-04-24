@@ -5,6 +5,15 @@
 )]
 
 
+//     para um cpf ser válido, ele deve conter:
+//     - 11 dígitos
+//     - desses, os 9 primeiros devem formar os 2 últimos
+//
+//     a função de verificar cpf deve retornar um bool,
+//     pois como ela própria diz: ou o cpf é válido, ou
+//     não é
+
+
 pub struct CPF {
     cpf: String
 } // fim da struct
@@ -90,7 +99,11 @@ fn main() {
         true  => println!("Este CPF é válido"),
         false => println!("O CPF foi dado incorretamente")
     }
-    
+
+    // os blocos de código abaixo são apenas
+    // tentativas de visualizar melhor qual
+    // forma de escrever é a mais clara/legível
+
     println!("{}", match cpfUsuario.validarCPF() {
         Ok(resultado) => resultado,
         Err(motivo)   => motivo
@@ -101,16 +114,13 @@ fn main() {
         Err(motivo)   => println!("{}", motivo)
     }
 
+    let validacao = match cpfUsuario.validarCPF() {
+        Ok(resultado) => resultado,
+        Err(motivo)   => motivo
+    };
+    println!("{}", validacao);
+
 } // fim da main
-
-
-//     para um cpf ser válido, ele deve conter:
-//     - 11 dígitos
-//     - desses, os 9 primeiros devem formar os 2 últimos
-//
-//     a função de verificar cpf deve retornar um bool,
-//     pois como ela própria diz: ou o cpf é válido, ou
-//     não é
 
 
 // fn primeiroVerificador(cpf: String) -> u32 {
