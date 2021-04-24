@@ -71,7 +71,10 @@ impl CPF {
     fn oPenultimoEhValido(&self) -> Result<(), &'static str> {
         let penultimo = self.obterDigito(9);
 
-        Err("O CPF não gera o penúltimo algarismo")
+        match penultimo == self.gerarVerificador() {
+            true  => Ok(()),
+            false => Err("O CPF não gera o penúltimo algarismo")
+        }
     } // fim do método privado oPenultimoEhValido
 
 
@@ -85,8 +88,16 @@ impl CPF {
     fn oUltimoEhValido(&self) -> Result<(), &'static str> {
         let ultimo = self.obterDigito(10);
 
-        Err("O CPF não gera o último algarismo")
+        match ultimo == self.gerarVerificador() {
+            true  => Ok(()),
+            false => Err("O CPF não gera o último algarismo")
+        }
     } // fim do método privado oUltimoEhValido
+
+
+        fn gerarVerificador(&self) -> u32 {
+            0
+        } // fim do método privado gerarVerificador
 
 
 } // fim dos métodos
