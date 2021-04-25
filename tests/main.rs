@@ -1,9 +1,9 @@
 #![allow(non_snake_case)]
 
-mod cpf;
-use crate::cpf::CPF;
+use verificador_de_cpf::CPF;
 
-fn main() {
+#[test]
+fn cpf_works() {
     let cpfValido = CPF::from("529.982.247-25");
     println!("{}", cpfValido.get());
     
@@ -71,4 +71,4 @@ fn main() {
     }
 
  
-} // fim da main
+}
