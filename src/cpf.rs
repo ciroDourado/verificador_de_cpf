@@ -12,6 +12,17 @@
 //     pro caso do usuário dar algo como a52$9%98sd2o24P7%2$5
 //     e o programa dar como válido, somente pelo fato de que
 //     os dígitos formam uma SEQUENCIA válida (529 982 247 25)
+//         
+//         ajuda: regex!!!
+//         use ([0-9]{3}[\.]{1}){2}[0-9]{3}[-][0-9]{2}
+//         para padroes do tipo 
+//             000.000.000-00
+//         ou use [0-9]{9}[-]?[0-9]{2}
+//         para padroes do tipo
+//             000000000-00
+//             00000000000
+//         no fim, a string de regex deve ser algo do tipo
+//     (([0-9]{3}[\.]{1}){2}[0-9]{3}[-][0-9]{2})|([0-9]{9}[-]?[0-9]{2})
 //
 //     Urgente: implementar um verificador para casos em que
 //     todos os algarismos são iguais - o que é inválido, mas
