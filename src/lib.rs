@@ -1,3 +1,3 @@
 mod cpf;
 
-pub use cpf::CPF;
+pub use crate::cpf::CPF;
