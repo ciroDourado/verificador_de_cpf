@@ -1,6 +1,6 @@
 #![allow(non_snake_case)]
 
-use verificador_de_cpf::CPF;
+use cpf::CPF;
 
 #[test]
 fn cpf_works() {
@@ -70,5 +70,5 @@ fn cpf_works() {
         Err(motivo)   => println!("{}", motivo)
     }
 
- 
+
 }

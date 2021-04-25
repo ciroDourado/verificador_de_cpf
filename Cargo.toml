@@ -1,5 +1,5 @@
 [package]
-name = "verificador_de_cpf"
+name = "cpf"
 version = "0.1.0"
 authors = ["ciro"]
 edition = "2018"
