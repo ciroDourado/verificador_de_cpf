@@ -1,8 +1,4 @@
-#![allow(
-    non_snake_case,
-    dead_code,
-    unused_variables
-)]
+#![allow(non_snake_case)]
 
 
 //     para um cpf ser válido, ele deve conter:
@@ -12,6 +8,15 @@
 //     a função de verificar cpf deve retornar um bool,
 //     pois como ela própria diz: ou o cpf é válido, ou
 //     não é
+//
+//     To-do: me desafiar a criar um verificador de string,
+//     pro caso do usuário dar algo como a52$9%98sd2o24P7%2$5
+//     e o programa dar como válido, somente pelo fato de que
+//     os dígitos formam uma SEQUENCIA válida (529 982 247 25)
+//
+//     Urgente: implementar um verificador para casos em que
+//     todos os algarismos são iguais - o que é inválido, mas
+//     que o algoritmo deixa passar
 
 use std::cmp::Ordering;
 
@@ -20,13 +25,13 @@ pub struct CPF {
 } // fim da struct
 
 impl CPF {
-    // for mutable instances
+    // dica: use em instâncias mutáveis
     pub fn new() -> Self {
         CPF { cpf: String::new() }
-    } // fim do construtor
+    } // fim do construtor 
 
 
-    // for immutable instances
+    // dica: use em instâncias imutáveis
     pub fn from(digitos: &'static str) -> Self {
         CPF { cpf: String::from(digitos) }
     } // fim do construtor
@@ -44,13 +49,13 @@ impl CPF {
 
     pub fn ehValido(&self) -> bool {
         self.validarCPF().is_ok()
-    } // fim do método CPF é válido
+    } // fim do método ehValido
 
 
     pub fn validarCPF(&self) -> Result<&'static str, &'static str> {
         self.tem11Digitos()?;
-            Ok("O CPF dado é valido")
-    } // fim do método CPF é válido
+            Ok("Todos os algarismos passam no teste")
+    } // fim do método validarCPF
 
 
     fn tem11Digitos(&self) -> Result<(), &'static str> {
@@ -87,7 +92,7 @@ impl CPF {
             self.obterDigitos().as_str().chars()
                 .nth(posicao).unwrap()
                 .to_digit(10).unwrap()
-        } // fim obterPenultimoDigito
+        } // fim obterDigito
 
 
     fn oUltimoEhValido(&self) -> Result<(), &'static str> {
@@ -128,7 +133,7 @@ impl CPF {
 
 fn charPara_u32(algarismo: char) -> u32 {
     algarismo.to_digit(10).unwrap()
-} // fim digitoVezesIndice
+} // fim charPara_u32
 
 
 fn digitoVezesIndice(enupla: (u32, usize)) -> u32 {
@@ -140,31 +145,29 @@ fn digitoVezesIndice(enupla: (u32, usize)) -> u32 {
 
 
 fn main() {
-    let cpfUsuario = CPF::from("529.982.247-25");
-
-    match cpfUsuario.ehValido() {
+    let cpfValido = CPF::from("529.982.247-25");
+    println!("{}", cpfValido.get());
+    
+    match cpfValido.ehValido() {
         true  => println!("Este CPF é válido"),
         false => println!("O CPF foi dado incorretamente")
     }
-
-    // os blocos de código abaixo são apenas
-    // tentativas de visualizar melhor qual
-    // forma de escrever é a mais clara/legível
-
-    // println!("{}", match cpfUsuario.validarCPF() {
-    //     Ok(resultado) => resultado,
-    //     Err(motivo)   => motivo
-    // });
-
-    match cpfUsuario.validarCPF() {
+    match cpfValido.validarCPF() {
         Ok(resultado) => println!("{}", resultado),
         Err(motivo)   => println!("{}", motivo)
     }
 
-    // let validacao = match cpfUsuario.validarCPF() {
-    //     Ok(resultado) => resultado,
-    //     Err(motivo)   => motivo
-    // };
-    // println!("{}", validacao);
 
+
+    let cpfInvalido = CPF::from("123.456.789-01");
+    println!("{}", cpfInvalido.get());
+
+    match cpfInvalido.ehValido() {
+        true  => println!("Este CPF é válido"),
+        false => println!("O CPF foi dado incorretamente")
+    }
+    match cpfInvalido.validarCPF() {
+        Ok(resultado) => println!("{}", resultado),
+        Err(motivo)   => println!("{}", motivo)
+    }
 } // fim da main
