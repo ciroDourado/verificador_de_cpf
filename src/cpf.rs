@@ -1,5 +1,4 @@
-#![allow(non_snake_case)]
-
+#![allow(non_snake_case, dead_code)]
 
 //     para um cpf ser válido, ele deve conter:
 //     - 11 dígitos
@@ -142,32 +141,3 @@ fn digitoVezesIndice(enupla: (u32, usize)) -> u32 {
 
     digito*indice
 } // fim digitoVezesIndice
-
-
-fn main() {
-    let cpfValido = CPF::from("529.982.247-25");
-    println!("{}", cpfValido.get());
-    
-    match cpfValido.ehValido() {
-        true  => println!("Este CPF é válido"),
-        false => println!("O CPF foi dado incorretamente")
-    }
-    match cpfValido.validarCPF() {
-        Ok(resultado) => println!("{}", resultado),
-        Err(motivo)   => println!("{}", motivo)
-    }
-
-
-
-    let cpfInvalido = CPF::from("123.456.789-01");
-    println!("{}", cpfInvalido.get());
-
-    match cpfInvalido.ehValido() {
-        true  => println!("Este CPF é válido"),
-        false => println!("O CPF foi dado incorretamente")
-    }
-    match cpfInvalido.validarCPF() {
-        Ok(resultado) => println!("{}", resultado),
-        Err(motivo)   => println!("{}", motivo)
-    }
-} // fim da main
