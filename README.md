@@ -25,11 +25,11 @@ use cpf::CPF;
 <br>
 
 ## API:<br>
-| Método     | Parâmetro       | Retorno                         | Observação                  |
-|------------|-----------------|---------------------------------|-----------------------------|
-| new        | Nenhum          | Uma nova instância vazia        | Use com variáveis mutáveis  |
-| from       | &str            | Uma nova instância inicializada | Use com variáveis imutáveis |
-| set        | &mut self, &str | Nenhum                          |                             |
-| get        | &self           | Uma cópia do CPF em String      |                             |
-| ehValido   | &self           | Bool                            |                             |
-| validarCPF | &self           | Result<&str, &str>              |                             |
+| Método     | Parâmetro       | Retorno                         | Observação                          |
+|------------|-----------------|---------------------------------|-------------------------------------|
+| new        | Nenhum          | Uma nova instância vazia        | Preferível para variáveis mutáveis  |
+| from       | &str            | Uma nova instância inicializada | Preferível para variáveis imutáveis |
+| set        | &mut self, &str | Nenhum                          |                                     |
+| get        | &self           | Uma cópia do CPF em String      |                                     |
+| ehValido   | &self           | Bool                            |                                     |
+| validarCPF | &self           | Result<&str, &str>              |                                     |
