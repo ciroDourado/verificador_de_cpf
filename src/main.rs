@@ -51,4 +51,24 @@ fn main() {
         Ok(resultado) => println!("{}", resultado),
         Err(motivo)   => println!("{}", motivo)
     }
+
+
+    ///////////
+    println!();
+    ///////////
+
+
+    let cpfEntreCaracteres = CPF::from("b529982d24725");
+    println!("{}", cpfEntreCaracteres.get());
+
+    match cpfEntreCaracteres.ehValido() {
+        true  => println!("Este CPF é válido"),
+        false => println!("O CPF foi dado incorretamente")
+    }
+    match cpfEntreCaracteres.validarCPF() {
+        Ok(resultado) => println!("{}", resultado),
+        Err(motivo)   => println!("{}", motivo)
+    }
+
+ 
 } // fim da main
