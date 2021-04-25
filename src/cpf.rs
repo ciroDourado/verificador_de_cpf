@@ -1,6 +1,7 @@
 #![allow(non_snake_case, dead_code)]
 
 //     para um cpf ser válido, ele deve conter:
+//     - 14 caracteres (3 são opcionais)
 //     - 11 dígitos
 //     - desses, os 9 primeiros devem formar os 2 últimos
 //
@@ -28,6 +29,7 @@
 //     todos os algarismos são iguais - o que é inválido, mas
 //     que o algoritmo deixa passar
 
+use regex::Regex;
 use std::cmp::Ordering;
 
 pub struct CPF {
@@ -63,9 +65,39 @@ impl CPF {
 
 
     pub fn validarCPF(&self) -> Result<&'static str, &'static str> {
-        self.tem11Digitos()?;
-            Ok("Todos os algarismos passam no teste")
+        self.tem11a14caracteres()?;
+            Ok("Os caracteres do CPF dado passam no teste")
     } // fim do método validarCPF
+
+
+    fn tem11a14caracteres(&self) -> Result<(), &'static str> {
+        match self.get().len() {
+            11 ..= 14 => self.passaNaRegex1(),
+            _         => Err("Número incorreto de caracteres")
+        }
+    } // fim do método privado tem11a14caracteres
+
+
+    fn passaNaRegex1(&self) -> Result<(), &'static str> {
+        let expressao = Regex::new(r"[0-9]{9}[-]?[0-9]{2}")
+            .unwrap();
+
+        match expressao.is_match(self.get().as_str()) {
+            true  => self.tem11Digitos(),
+            false => self.passaNaRegex2()
+        }
+    } // fim do método privado passaNaRegex1
+
+
+    fn passaNaRegex2(&self) -> Result<(), &'static str> {
+        let expressao = Regex::new(r"([0-9]{3}[\.]{1}){2}[0-9]{3}[-][0-9]{2}")
+            .unwrap();
+
+        match expressao.is_match(self.get().as_str()) {
+            true  => self.tem11Digitos(),
+            false => Err("Não condiz com um CPF")
+        }
+    } // fim do método privado passaNaRegex2
 
 
     fn tem11Digitos(&self) -> Result<(), &'static str> {

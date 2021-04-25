@@ -33,4 +33,22 @@ fn main() {
         Ok(resultado) => println!("{}", resultado),
         Err(motivo)   => println!("{}", motivo)
     }
+    
+
+    ///////////
+    println!();
+    ///////////
+
+
+    let cpfSemSeparadores = CPF::from("52998224725");
+    println!("{}", cpfSemSeparadores.get());
+
+    match cpfSemSeparadores.ehValido() {
+        true  => println!("Este CPF é válido"),
+        false => println!("O CPF foi dado incorretamente")
+    }
+    match cpfSemSeparadores.validarCPF() {
+        Ok(resultado) => println!("{}", resultado),
+        Err(motivo)   => println!("{}", motivo)
+    }
 } // fim da main
