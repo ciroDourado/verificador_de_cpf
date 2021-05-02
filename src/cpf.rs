@@ -1,29 +1,10 @@
 #![allow(non_snake_case, dead_code)]
 
 //     para um cpf ser válido, ele deve conter:
-//     - 14 caracteres (3 são opcionais)
-//     - 11 dígitos
-//     - desses, os 9 primeiros devem formar os 2 últimos
-//
-//     a função de verificar cpf deve retornar um bool,
-//     pois como ela própria diz: ou o cpf é válido, ou
-//     não é
-//
-//     To-do: me desafiar a criar um verificador de string,
-//     pro caso do usuário dar algo como a52$9%98sd2o24P7%2$5
-//     e o programa dar como válido, somente pelo fato de que
-//     os dígitos formam uma SEQUENCIA válida (529 982 247 25)
-//         
-//         ajuda: regex!!!
-//         use ([0-9]{3}[\.]{1}){2}[0-9]{3}[-][0-9]{2}
-//         para padroes do tipo 
-//             000.000.000-00
-//         ou use [0-9]{9}[-]?[0-9]{2}
-//         para padroes do tipo
-//             000000000-00
-//             00000000000
-//         no fim, a string de regex deve ser algo do tipo
-//     (([0-9]{3}[\.]{1}){2}[0-9]{3}[-][0-9]{2})|([0-9]{9}[-]?[0-9]{2})
+//     - 14 caracteres 
+//         - 3 são símbolos, opcionais
+//         - 11 são dígitos, obrigatórios
+//     - desses dígitos, os 9 primeiros devem formar os 2 últimos
 //
 //     Urgente: implementar um verificador para casos em que
 //     todos os algarismos são iguais - o que é inválido, mas
@@ -142,7 +123,7 @@ impl CPF {
         let ultimo = self.obterDigito(indice);
 
         match ultimo == self.gerarVerificador(indice) {
-            true  => Ok(()),
+            true  => self.digitosNaoSaoIguais(),
             false => Err("O CPF não gera o último algarismo")
         }
     } // fim do método privado oUltimoEhValido
@@ -169,6 +150,25 @@ impl CPF {
                 .collect::<Vec<u32>>();
             elementos
         } // fim digitosVezesIndices
+
+
+    fn digitosNaoSaoIguais(&self) -> Result<(), &'static str> {
+        let primeiro = self.obterPrimeiroAlgarismo();
+        let algarismosIguaisAoPrimeiro = self.get().chars()
+            .filter(|&algarismo| algarismo == primeiro)
+            .count();
+
+        match algarismosIguaisAoPrimeiro != 11 {
+            true  => Ok(()),
+            false => Err("Os dígitos são todos iguais")
+        }
+    } // fim digitosNaoSaoIguais
+
+
+        fn obterPrimeiroAlgarismo(&self) -> char {
+            self.get().as_str().chars().nth(0).unwrap()
+        } // fim obterPrimeiroAlgarismo
+
 
 } // fim dos métodos
 
