@@ -71,4 +71,22 @@ fn cpf_works() {
     }
 
 
+    ///////////
+    println!();
+    ///////////
+
+
+    let digitosIguais = CPF::from("111.111.111-11");
+    println!("{}", digitosIguais.get());
+
+    match digitosIguais.ehValido() {
+        true  => println!("Este CPF é válido"),
+        false => println!("O CPF foi dado incorretamente")
+    }
+    match digitosIguais.validarCPF() {
+        Ok(resultado) => println!("{}", resultado),
+        Err(motivo)   => println!("{}", motivo)
+    }
+
+
 }
