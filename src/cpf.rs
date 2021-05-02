@@ -154,11 +154,9 @@ impl CPF {
 
     fn digitosNaoSaoIguais(&self) -> Result<(), &'static str> {
         let primeiro = self.obterPrimeiroAlgarismo();
-        let algarismosIguaisAoPrimeiro = self.get().chars()
-            .filter(|&algarismo| algarismo == primeiro)
-            .count();
+        let iguaisAoPrimeiro = self.algarismosIguaisA(primeiro);
 
-        match algarismosIguaisAoPrimeiro != 11 {
+        match iguaisAoPrimeiro.len() != 11 {
             true  => Ok(()),
             false => Err("Os dígitos são todos iguais")
         }
@@ -168,6 +166,13 @@ impl CPF {
         fn obterPrimeiroAlgarismo(&self) -> char {
             self.get().as_str().chars().nth(0).unwrap()
         } // fim obterPrimeiroAlgarismo
+
+
+        fn algarismosIguaisA(&self, dado: char) -> String {
+            self.get().chars()
+                .filter(|&algarismo| algarismo == dado)
+                .collect::<String>()
+        } // fim algarismosIguaisA
 
 
 } // fim dos métodos
