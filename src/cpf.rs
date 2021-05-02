@@ -5,10 +5,6 @@
 //         - 3 são símbolos, opcionais
 //         - 11 são dígitos, obrigatórios
 //     - desses dígitos, os 9 primeiros devem formar os 2 últimos
-//
-//     Urgente: implementar um verificador para casos em que
-//     todos os algarismos são iguais - o que é inválido, mas
-//     que o algoritmo deixa passar
 
 use regex::Regex;
 use std::cmp::Ordering;
